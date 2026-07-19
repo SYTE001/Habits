@@ -1,0 +1,2053 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HABITS — Neo-Brutalism Habit Tracker</title>
+<meta name="description" content="Track your daily habits with style. Neo-Brutalism Habit Tracker Dashboard.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Archivo+Black&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔥</text></svg>">
+<meta property="og:title" content="HABITS — Neo-Brutalism Habit Tracker">
+<meta property="og:description" content="Bangun kebiasaan baik dengan Habit Tracker bertema Neo-Brutalism yang interaktif, fungsional, dan keren!">
+<meta property="og:type" content="website">
+<style>
+/* ===== RESET & BASE ===== */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --bg: #F5F1E8;
+  --yellow: #FFD700;
+  --pink: #FF6B9D;
+  --blue: #4D7FFF;
+  --green: #7FFF6B;
+  --black: #000;
+  --white: #FFF;
+  --shadow: 6px 6px 0px var(--black);
+  --shadow-sm: 4px 4px 0px var(--black);
+  --shadow-active: 2px 2px 0px var(--black);
+  --border: 3px solid var(--black);
+  --border-thick: 5px solid var(--black);
+  --radius: 8px;
+  --font-main: 'Space Grotesk', sans-serif;
+  --font-heading: 'Archivo Black', 'Space Grotesk', sans-serif;
+  --gray-light: #E0DDD5;
+  --gray: #B0ADA5;
+  --red: #FF4444;
+}
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-main);
+  background: var(--bg);
+  color: var(--black);
+  min-height: 100vh;
+  line-height: 1.5;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes popIn {
+  0% { transform: scale(0.8); opacity: 0; }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); opacity: 1; }
+}
+@keyframes popInRotateLeft {
+  0% { transform: scale(0.8) rotate(0deg); opacity: 0; }
+  50% { transform: scale(1.05) rotate(-1.5deg); }
+  100% { transform: scale(1) rotate(-1deg); opacity: 1; }
+}
+@keyframes popInRotateRight {
+  0% { transform: scale(0.8) rotate(0deg); opacity: 0; }
+  50% { transform: scale(1.05) rotate(2.5deg); }
+  100% { transform: scale(1) rotate(2deg); opacity: 1; }
+}
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-6px); }
+  40% { transform: translateX(6px); }
+  60% { transform: translateX(-4px); }
+  80% { transform: translateX(4px); }
+}
+@keyframes stamp {
+  0% { transform: scale(2); opacity: 0; }
+  50% { transform: scale(0.9); opacity: 1; }
+  70% { transform: scale(1.1); }
+  100% { transform: scale(1); opacity: 1; }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes slideUp {
+  from { transform: translateY(30px) scale(0.95); opacity: 0; }
+  to { transform: translateY(0) scale(1); opacity: 1; }
+}
+@keyframes confettiFall {
+  0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
+@keyframes progressFill {
+  from { width: 0%; }
+}
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+@keyframes wiggle {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-3deg); }
+  75% { transform: rotate(3deg); }
+}
+.anim-pop-in { animation: popIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+.anim-pop-left { animation: popInRotateLeft 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+.anim-pop-right { animation: popInRotateRight 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+.anim-shake { animation: shake 0.4s ease; }
+.anim-stamp { animation: stamp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); }
+.anim-bounce { animation: bounce 0.5s ease; }
+
+/* ===== HEADER ===== */
+.header {
+  background: var(--yellow);
+  border-bottom: var(--border-thick);
+  padding: 16px 24px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.header-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.header h1 {
+  font-family: var(--font-heading);
+  font-size: 1.8rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+.header h1 span { color: var(--pink); }
+.xp-bar-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--white);
+  border: var(--border);
+  border-radius: var(--radius);
+  padding: 6px 14px;
+  box-shadow: var(--shadow-sm);
+  min-width: 220px;
+}
+.xp-bar-container .level-badge {
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  background: var(--blue);
+  color: var(--white);
+  border: 2px solid var(--black);
+  border-radius: 4px;
+  padding: 2px 8px;
+  white-space: nowrap;
+}
+.xp-bar-wrap {
+  flex: 1;
+  height: 16px;
+  background: var(--gray-light);
+  border: 2px solid var(--black);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.xp-bar-fill {
+  height: 100%;
+  background: var(--green);
+  transition: width 0.6s ease;
+}
+.xp-text {
+  font-size: 0.75rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* ===== TOOLBAR ===== */
+.toolbar {
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 0 24px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+.toolbar-left { display: flex; gap: 10px; flex-wrap: wrap; flex: 1; }
+.toolbar-right { display: flex; gap: 10px; flex-wrap: wrap; }
+
+/* ===== BUTTONS ===== */
+.btn {
+  font-family: var(--font-main);
+  font-weight: 700;
+  font-size: 0.85rem;
+  padding: 8px 16px;
+  border: var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  transition: all 0.1s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--white);
+  color: var(--black);
+  user-select: none;
+}
+.btn:hover { transform: translate(-2px, -2px); box-shadow: 8px 8px 0px var(--black); }
+.btn:active { transform: translate(4px, 4px); box-shadow: var(--shadow-active); }
+.btn-primary { background: var(--yellow); }
+.btn-pink { background: var(--pink); color: var(--white); }
+.btn-blue { background: var(--blue); color: var(--white); }
+.btn-green { background: var(--green); }
+.btn-red { background: var(--red); color: var(--white); }
+.btn-sm { padding: 5px 10px; font-size: 0.75rem; box-shadow: 3px 3px 0px var(--black); }
+.btn-sm:hover { box-shadow: 5px 5px 0px var(--black); }
+.btn-sm:active { transform: translate(3px, 3px); box-shadow: 1px 1px 0px var(--black); }
+
+/* ===== SELECT / INPUT ===== */
+.neo-select, .neo-input {
+  font-family: var(--font-main);
+  font-weight: 600;
+  font-size: 0.85rem;
+  padding: 8px 12px;
+  border: var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  background: var(--white);
+  color: var(--black);
+  outline: none;
+  transition: box-shadow 0.15s;
+}
+.neo-select:focus, .neo-input:focus {
+  box-shadow: 8px 8px 0px var(--black);
+}
+.neo-input.error {
+  border-color: var(--red);
+  box-shadow: 4px 4px 0px var(--red);
+}
+.error-msg {
+  color: var(--red);
+  font-size: 0.78rem;
+  font-weight: 700;
+  background: #FFF0F0;
+  border: 2px solid var(--red);
+  border-radius: 4px;
+  padding: 4px 8px;
+  margin-top: 4px;
+  display: none;
+}
+.error-msg.show { display: block; animation: shake 0.3s ease; }
+
+/* ===== STATS BAR ===== */
+.stats-bar {
+  max-width: 1200px;
+  margin: 0 auto 20px;
+  padding: 0 24px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 14px;
+}
+.stat-card {
+  background: var(--white);
+  border: var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 16px;
+  text-align: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.stat-card:hover { transform: translate(-2px, -2px); box-shadow: 8px 8px 0px var(--black); }
+.stat-card .stat-number {
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  line-height: 1;
+  margin-bottom: 4px;
+  color: var(--black);
+}
+.stat-card .stat-label {
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--black);
+}
+
+/* ===== MAIN GRID ===== */
+.main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px 60px;
+}
+.habits-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 20px;
+}
+
+/* ===== HABIT CARD ===== */
+.habit-card {
+  border: var(--border-thick);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 18px;
+  position: relative;
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: default;
+  color: var(--black);
+}
+.habit-card:hover { transform: translate(-2px, -2px); box-shadow: 8px 8px 0px var(--black); z-index: 2; }
+.habit-card.dragging { opacity: 0.5; transform: scale(0.95); }
+.habit-card.drag-over { border-style: dashed; }
+.habit-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+.habit-emoji {
+  font-size: 2rem;
+  line-height: 1;
+  cursor: grab;
+}
+.habit-emoji:active { cursor: grabbing; }
+.habit-name {
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  flex: 1;
+  margin: 0 10px;
+  word-break: break-word;
+  color: var(--black);
+}
+.habit-meta {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--black);
+  margin-top: 2px;
+}
+.habit-actions { display: flex; gap: 6px; }
+.habit-actions .btn-icon {
+  width: 30px; height: 30px;
+  border: 2px solid var(--black);
+  border-radius: 4px;
+  background: var(--white);
+  cursor: pointer;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 2px 2px 0px var(--black);
+  transition: all 0.1s;
+}
+.habit-actions .btn-icon:hover { transform: translate(-1px, -1px); box-shadow: 3px 3px 0px var(--black); }
+.habit-actions .btn-icon:active { transform: translate(2px, 2px); box-shadow: 0 0 0 var(--black); }
+
+/* Check-in button */
+.checkin-area {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 12px 0;
+  padding: 10px;
+  background: var(--white);
+  border: var(--border);
+  border-radius: var(--radius);
+}
+.checkin-btn {
+  width: 44px; height: 44px;
+  border: var(--border);
+  border-radius: var(--radius);
+  font-size: 1.3rem;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.checkin-btn.unchecked { background: var(--white); }
+.checkin-btn.checked { background: var(--green); }
+.checkin-btn:active { transform: translate(3px, 3px); box-shadow: 1px 1px 0 var(--black); }
+.checkin-status {
+  font-weight: 800;
+  font-size: 0.88rem;
+}
+.checkin-status.done { color: #0d6100; }
+.checkin-status.pending { color: var(--black); }
+
+/* Weekly progress */
+.weekly-progress {
+  margin: 8px 0;
+}
+.weekly-progress-label {
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+  display: flex;
+  justify-content: space-between;
+  color: var(--black);
+}
+.progress-bar-wrap {
+  height: 18px;
+  background: var(--white);
+  border: 2px solid var(--black);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.progress-bar-fill {
+  height: 100%;
+  transition: width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  animation: progressFill 0.6s ease;
+}
+
+/* Streak */
+.streak-row {
+  display: flex;
+  gap: 14px;
+  margin: 8px 0;
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: var(--black);
+}
+.streak-row span { display: flex; align-items: center; gap: 4px; }
+
+/* Mini calendar (contribution graph) */
+.mini-calendar {
+  margin-top: 10px;
+}
+.mini-calendar-title {
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--black);
+}
+.mini-cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 3px;
+}
+.mini-cal-day-label {
+  font-size: 0.6rem;
+  font-weight: 800;
+  text-align: center;
+  color: var(--black);
+}
+.mini-cal-cell {
+  aspect-ratio: 1;
+  border-radius: 3px;
+  border: 1.5px solid var(--black);
+  cursor: pointer;
+  transition: all 0.15s;
+  position: relative;
+  min-height: 14px;
+}
+.mini-cal-cell:hover { transform: scale(1.3); z-index: 2; }
+.mini-cal-cell.empty { background: var(--gray-light); border-color: #ccc; cursor: default; }
+.mini-cal-cell.empty:hover { transform: none; }
+.mini-cal-cell.future { background: var(--bg); border-style: dashed; border-color: #ccc; cursor: not-allowed; }
+.mini-cal-cell.future:hover { transform: none; }
+.mini-cal-cell.checked { opacity: 1; }
+.mini-cal-cell.unchecked { background: var(--gray-light); }
+.mini-cal-cell .tooltip {
+  display: none;
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--black);
+  color: var(--white);
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 0.65rem;
+  font-weight: 600;
+  white-space: nowrap;
+  z-index: 10;
+  pointer-events: none;
+}
+.mini-cal-cell:hover .tooltip,
+.mini-cal-cell:focus .tooltip,
+.mini-cal-cell:focus-within .tooltip,
+.mini-cal-cell:active .tooltip { 
+  display: block; 
+}
+
+/* ===== GLOBAL TOAST ===== */
+.global-toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: var(--pink);
+  color: var(--white);
+  border: var(--border-thick);
+  border-radius: var(--radius);
+  box-shadow: 6px 6px 0px var(--black);
+  padding: 16px 24px;
+  font-weight: 700;
+  z-index: 10000;
+  display: none;
+  align-items: center;
+  gap: 12px;
+  animation: slideUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.global-toast.active { display: flex; }
+.global-toast.success { background: var(--green); color: var(--black); }
+.global-toast.error { background: var(--red); color: var(--white); }
+
+/* ===== EMPTY STATE ===== */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  background: var(--white);
+  border: var(--border-thick);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  transform: rotate(-1deg);
+}
+.empty-state .empty-emoji { font-size: 4rem; margin-bottom: 16px; }
+.empty-state h2 {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  margin-bottom: 8px;
+}
+.empty-state p { color: #666; font-weight: 600; margin-bottom: 20px; }
+
+/* ===== MODAL ===== */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+.modal-overlay.active { display: flex; animation: fadeIn 0.2s ease; }
+.modal {
+  background: var(--white);
+  border: var(--border-thick);
+  border-radius: var(--radius);
+  box-shadow: 10px 10px 0px var(--black);
+  padding: 28px;
+  max-width: 500px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: slideUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: relative;
+}
+.modal-close {
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  font-weight: 900;
+  line-height: 1;
+  transition: transform 0.1s;
+}
+.modal-close:hover { transform: scale(1.2); }
+.modal h2 {
+  font-family: var(--font-heading);
+  font-size: 1.3rem;
+  margin-bottom: 16px;
+  padding-right: 30px;
+}
+.form-group {
+  margin-bottom: 14px;
+}
+.form-group label {
+  display: block;
+  font-weight: 700;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 5px;
+}
+.form-group .neo-input, .form-group .neo-select {
+  width: 100%;
+}
+.color-picker-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.color-swatch {
+  width: 36px; height: 36px;
+  border: 3px solid var(--black);
+  border-radius: 4px;
+  cursor: pointer;
+  box-shadow: 2px 2px 0 var(--black);
+  transition: all 0.1s;
+}
+.color-swatch:hover { transform: translate(-2px, -2px); box-shadow: 4px 4px 0 var(--black); }
+.color-swatch.selected { box-shadow: 0 0 0 var(--black); transform: translate(2px, 2px); outline: 3px solid var(--blue); }
+.day-picker-row {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.day-chip {
+  padding: 5px 10px;
+  border: 2px solid var(--black);
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+  background: var(--white);
+  box-shadow: 2px 2px 0 var(--black);
+  transition: all 0.1s;
+  user-select: none;
+}
+.day-chip:active { transform: translate(2px, 2px); box-shadow: 0 0 0; }
+.day-chip.selected { background: var(--blue); color: var(--white); }
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 18px;
+  justify-content: flex-end;
+}
+
+/* Confirm modal */
+.confirm-modal .confirm-text {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+.confirm-modal .confirm-sub {
+  font-size: 0.82rem;
+  color: #666;
+  margin-bottom: 18px;
+}
+
+/* ===== CONFETTI ===== */
+.confetti-particle {
+  position: fixed;
+  top: -10px;
+  width: 10px;
+  height: 10px;
+  border: 2px solid var(--black);
+  z-index: 9999;
+  pointer-events: none;
+  animation: confettiFall linear forwards;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .header h1 { font-size: 1.3rem; }
+  .xp-bar-container { min-width: 160px; }
+  .habits-grid { grid-template-columns: 1fr; }
+  .stats-bar { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }
+  .toolbar { flex-direction: column; align-items: stretch; }
+  .toolbar-left, .toolbar-right { justify-content: center; }
+  .modal { padding: 20px; margin: 10px; }
+}
+@media (max-width: 480px) {
+  .header { padding: 12px 16px; }
+  .header h1 { font-size: 1.1rem; letter-spacing: 1px; }
+  .main { padding: 0 12px 40px; }
+  .stats-bar { padding: 0 12px; gap: 10px; }
+  .toolbar { padding: 0 12px; }
+  .stat-card { padding: 12px; }
+  .stat-card .stat-number { font-size: 1.5rem; }
+  .habit-card { padding: 14px; }
+}
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--black); border-radius: 4px; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header-inner">
+    <h1>🔥 HABIT<span>S</span></h1>
+    <div class="xp-bar-container" id="xpBarContainer">
+      <span class="level-badge" id="levelBadge">LVL 1</span>
+      <div class="xp-bar-wrap">
+        <div class="xp-bar-fill" id="xpBarFill" style="width:0%"></div>
+      </div>
+      <span class="xp-text" id="xpText">0 / 100 XP</span>
+    </div>
+  </div>
+</header>
+
+<!-- STATS BAR -->
+<section class="stats-bar" id="statsBar">
+  <div class="stat-card"><div class="stat-number" id="statTotalHabits" data-target="0">0</div><div class="stat-label">Habit Aktif</div></div>
+  <div class="stat-card"><div class="stat-number" id="statTodayCheckin" data-target="0">0/0</div><div class="stat-label">Check-in Hari Ini</div></div>
+  <div class="stat-card"><div class="stat-number" id="statWeeklyRate" data-target="0">0%</div><div class="stat-label">Rate Mingguan</div></div>
+  <div class="stat-card"><div class="stat-number" id="statMonthlyRate" data-target="0">0%</div><div class="stat-label">Rate Bulanan</div></div>
+  <div class="stat-card"><div class="stat-number" id="statLongestStreak" data-target="0">0</div><div class="stat-label">Streak Terpanjang</div></div>
+</section>
+
+<!-- TOOLBAR -->
+<div class="toolbar">
+  <div class="toolbar-left">
+    <button class="btn btn-primary" id="btnAddHabit">➕ Tambah Habit</button>
+    <select class="neo-select" id="filterSelect">
+      <option value="all">🔍 Semua</option>
+      <option value="done">✅ Selesai Hari Ini</option>
+      <option value="pending">⏳ Belum Selesai</option>
+    </select>
+    <select class="neo-select" id="sortSelect">
+      <option value="order">📋 Urutan Manual</option>
+      <option value="name">🔤 Nama</option>
+      <option value="streak">🔥 Streak Terpanjang</option>
+      <option value="rate">📊 Completion Rate</option>
+    </select>
+  </div>
+  <div class="toolbar-right">
+    <button class="btn btn-blue btn-sm" id="btnExport">📤 Export</button>
+    <button class="btn btn-sm" id="btnImport">📥 Import</button>
+    <button class="btn btn-red btn-sm" id="btnReset">🗑️ Reset</button>
+    <input type="file" id="importFile" accept=".json" style="display:none">
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<main class="main">
+  <div class="habits-grid" id="habitsGrid"></div>
+</main>
+
+<!-- ADD/EDIT HABIT MODAL -->
+<div class="modal-overlay" id="habitModal">
+  <div class="modal">
+    <button class="modal-close" data-close-modal="habitModal">&times;</button>
+    <h2 id="habitModalTitle">➕ TAMBAH HABIT BARU</h2>
+    <form id="habitForm" autocomplete="off">
+      <input type="hidden" id="habitEditId">
+      <div class="form-group">
+        <label for="habitName">Nama Habit *</label>
+        <input class="neo-input" type="text" id="habitName" placeholder="Contoh: Olahraga Pagi" maxlength="50">
+        <div class="error-msg" id="habitNameError"></div>
+      </div>
+      <div class="form-group">
+        <label for="habitEmoji">Emoji</label>
+        <input class="neo-input" type="text" id="habitEmoji" placeholder="💪" maxlength="4" style="width:80px">
+      </div>
+      <div class="form-group">
+        <label>Warna Kartu</label>
+        <div class="color-picker-row" id="colorPicker">
+          <div class="color-swatch selected" data-color="#FFD700" style="background:#FFD700"></div>
+          <div class="color-swatch" data-color="#FF6B9D" style="background:#FF6B9D"></div>
+          <div class="color-swatch" data-color="#4D7FFF" style="background:#4D7FFF"></div>
+          <div class="color-swatch" data-color="#7FFF6B" style="background:#7FFF6B"></div>
+          <div class="color-swatch" data-color="#FFB347" style="background:#FFB347"></div>
+          <div class="color-swatch" data-color="#E0BBE4" style="background:#E0BBE4"></div>
+          <div class="color-swatch" data-color="#87CEEB" style="background:#87CEEB"></div>
+          <div class="color-swatch" data-color="#FFFFFF" style="background:#FFFFFF"></div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="habitFreqType">Frekuensi Target</label>
+        <select class="neo-select" id="habitFreqType">
+          <option value="daily">Harian (Setiap Hari)</option>
+          <option value="weekly">X Kali per Minggu</option>
+          <option value="specific">Hari Tertentu</option>
+        </select>
+      </div>
+      <div class="form-group" id="weeklyCountGroup" style="display:none">
+        <label for="habitWeeklyCount">Berapa kali per minggu?</label>
+        <input class="neo-input" type="number" id="habitWeeklyCount" min="1" max="7" value="3" style="width:80px">
+      </div>
+      <div class="form-group" id="specificDaysGroup" style="display:none">
+        <label>Pilih Hari</label>
+        <div class="day-picker-row" id="dayPicker">
+          <span class="day-chip" data-day="0">Min</span>
+          <span class="day-chip" data-day="1">Sen</span>
+          <span class="day-chip" data-day="2">Sel</span>
+          <span class="day-chip" data-day="3">Rab</span>
+          <span class="day-chip" data-day="4">Kam</span>
+          <span class="day-chip" data-day="5">Jum</span>
+          <span class="day-chip" data-day="6">Sab</span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="habitDuration">Target Durasi (opsional)</label>
+        <input class="neo-input" type="text" id="habitDuration" placeholder="Contoh: 30 menit" maxlength="30">
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn" data-close-modal="habitModal">Batal</button>
+        <button type="submit" class="btn btn-primary" id="habitSubmitBtn">Simpan</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- DELETE CONFIRM MODAL -->
+<div class="modal-overlay" id="deleteModal">
+  <div class="modal confirm-modal">
+    <button class="modal-close" data-close-modal="deleteModal">&times;</button>
+    <h2>⚠️ HAPUS HABIT</h2>
+    <p class="confirm-text" id="deleteConfirmText">Yakin ingin menghapus habit ini?</p>
+    <p class="confirm-sub">Semua data check-in dan streak akan hilang permanen.</p>
+    <div class="modal-actions">
+      <button class="btn" data-close-modal="deleteModal">Batal</button>
+      <button class="btn btn-red" id="btnConfirmDelete">Hapus</button>
+    </div>
+  </div>
+</div>
+
+<!-- RESET CONFIRM MODAL -->
+<div class="modal-overlay" id="resetModal">
+  <div class="modal confirm-modal">
+    <button class="modal-close" data-close-modal="resetModal">&times;</button>
+    <h2>🚨 RESET SEMUA DATA</h2>
+    <p class="confirm-text">Semua habit, check-in, streak, dan XP akan dihapus.</p>
+    <p class="confirm-sub" id="resetStep1">Ketik <strong>"RESET"</strong> lalu klik tombol untuk konfirmasi.</p>
+    <input class="neo-input" type="text" id="resetConfirmInput" placeholder='Ketik "RESET"' style="width:100%;margin-bottom:12px">
+    <div class="error-msg" id="resetError"></div>
+    <div class="modal-actions">
+      <button class="btn" data-close-modal="resetModal">Batal</button>
+      <button class="btn btn-red" id="btnConfirmReset">Reset Semua</button>
+    </div>
+  </div>
+</div>
+
+<!-- GLOBAL TOAST -->
+<div class="global-toast" id="globalToast"></div>
+
+<script>
+"use strict";
+
+// ─── Configuration ───
+const ALLOW_PAST_CHECKIN = true; // Set to false to block user clicks on past calendar cells
+
+/* ============================================================
+   HABIT TRACKER — Neo-Brutalism Dashboard
+   Single-file application. All state in localStorage.
+   ============================================================ */
+
+// ─── Date Helpers ───
+const DateHelper = {
+  /** Return local-date string YYYY-MM-DD for a Date object */
+  toKey(d) {
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${y}-${m}-${day}`;
+  },
+  /** Parse a YYYY-MM-DD key into a local Date at midnight */
+  fromKey(key) {
+    const [y, m, d] = key.split('-').map(Number);
+    return new Date(y, m - 1, d);
+  },
+  /** Today as YYYY-MM-DD in local timezone */
+  todayKey() {
+    return this.toKey(new Date());
+  },
+  /** Get the Monday of the week containing date d (ISO week: Mon=start) */
+  weekStart(d) {
+    const copy = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+    const day = copy.getDay();
+    const diff = (day === 0 ? -6 : 1) - day; // Monday
+    copy.setDate(copy.getDate() + diff);
+    return copy;
+  },
+  /** Get first day of month */
+  monthStart(d) {
+    return new Date(d.getFullYear(), d.getMonth(), 1);
+  },
+  /** Days between two dates (date2 - date1, can be negative) */
+  daysBetween(d1, d2) {
+    const t1 = new Date(d1.getFullYear(), d1.getMonth(), d1.getDate()).getTime();
+    const t2 = new Date(d2.getFullYear(), d2.getMonth(), d2.getDate()).getTime();
+    return Math.round((t2 - t1) / 86400000);
+  },
+  /** Add days to a date */
+  addDays(d, n) {
+    const copy = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+    copy.setDate(copy.getDate() + n);
+    return copy;
+  },
+  /** Check if date is in the future compared to today */
+  isFuture(d) {
+    const today = new Date();
+    const todayMid = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+    const dMid = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+    return dMid.getTime() > todayMid.getTime();
+  },
+  /** Format date for display: "19 Jul 2026" */
+  format(d) {
+    const months = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
+    return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
+  },
+  /** Get the ISO week number */
+  getWeekNumber(d) {
+    const copy = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+    copy.setUTCDate(copy.getUTCDate() + 4 - (copy.getUTCDay() || 7));
+    const yearStart = new Date(Date.UTC(copy.getUTCFullYear(), 0, 1));
+    return Math.ceil((((copy - yearStart) / 86400000) + 1) / 7);
+  }
+};
+
+// ─── XP System ───
+const XPSystem = {
+  XP_PER_CHECKIN: 10,
+  XP_STREAK_BONUS_7: 50,
+  XP_STREAK_BONUS_30: 200,
+  XP_STREAK_BONUS_100: 500,
+  /** XP needed for a given level */
+  xpForLevel(level) {
+    return 100 * level;
+  },
+  /** Calculate level and progress from total XP */
+  calcLevel(totalXP) {
+    let level = 1;
+    let xpUsed = 0;
+    while (totalXP - xpUsed >= this.xpForLevel(level)) {
+      xpUsed += this.xpForLevel(level);
+      level++;
+    }
+    const currentLevelXP = totalXP - xpUsed;
+    const neededXP = this.xpForLevel(level);
+    return { level, currentLevelXP, neededXP, totalXP };
+  }
+};
+
+// ─── Unique ID Generator ───
+function generateId() {
+  return Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+}
+
+// ─── Main HabitTracker Class ───
+class HabitTracker {
+  constructor() {
+    this.STORAGE_KEY = 'neo_habit_tracker_data';
+    this.habits = [];
+    this.xp = 0;
+    this.load();
+    this.dragState = { dragId: null };
+    this.deleteTargetId = null;
+    this.bindEvents();
+    this.render();
+  }
+
+  // ─── Storage ───
+  load() {
+    try {
+      const raw = localStorage.getItem(this.STORAGE_KEY);
+      if (raw) {
+        const data = JSON.parse(raw);
+        if (data && Array.isArray(data.habits)) {
+          this.habits = data.habits;
+          this.xp = typeof data.xp === 'number' ? data.xp : 0;
+        }
+      }
+      this.recalculateXP();
+    } catch (e) {
+      console.warn('Failed to load data, starting fresh.', e);
+      this.habits = [];
+      this.xp = 0;
+    }
+  }
+
+  save() {
+    try {
+      const data = JSON.stringify({ habits: this.habits, xp: this.xp });
+      localStorage.setItem(this.STORAGE_KEY, data);
+    } catch (e) {
+      console.warn('Failed to save data.', e);
+      this.showGlobalToast('Gagal menyimpan data! Penyimpanan penuh atau mode privat aktif.', 'error');
+    }
+  }
+
+  showGlobalToast(message, type = 'error') {
+    let toast = document.getElementById('globalToast');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'globalToast';
+      toast.className = 'global-toast';
+      document.body.appendChild(toast);
+    }
+    toast.className = `global-toast active ${type}`;
+    toast.innerHTML = `
+      <span>${message}</span>
+      <button style="background:none;border:none;color:inherit;font-weight:bold;cursor:pointer;font-size:1.1rem;margin-left:12px;" onclick="document.getElementById('globalToast').classList.remove('active')">&times;</button>
+    `;
+    if (this.toastTimeout) clearTimeout(this.toastTimeout);
+    this.toastTimeout = setTimeout(() => {
+      toast.classList.remove('active');
+    }, 5000);
+  }
+
+  // ─── CRUD ───
+  addHabit(habit) {
+    this.habits.push(habit);
+    this.save();
+  }
+
+  updateHabit(id, updates) {
+    const idx = this.habits.findIndex(h => h.id === id);
+    if (idx !== -1) {
+      Object.assign(this.habits[idx], updates);
+      this.save();
+    }
+  }
+
+  deleteHabit(id) {
+    this.habits = this.habits.filter(h => h.id !== id);
+    this.save();
+  }
+
+  getHabit(id) {
+    return this.habits.find(h => h.id === id) || null;
+  }
+
+  isDuplicateName(name, excludeId) {
+    const lower = name.trim().toLowerCase();
+    return this.habits.some(h => h.id !== excludeId && h.name.trim().toLowerCase() === lower);
+  }
+
+  // ─── Check-In ───
+  toggleCheckIn(habitId, dateKey) {
+    const habit = this.getHabit(habitId);
+    if (!habit) return { changed: false };
+    // Prevent future check-in
+    const d = DateHelper.fromKey(dateKey);
+    if (DateHelper.isFuture(d)) return { changed: false };
+
+    if (!habit.checkins) habit.checkins = {};
+    const wasChecked = !!habit.checkins[dateKey];
+
+    if (wasChecked) {
+      delete habit.checkins[dateKey];
+    } else {
+      habit.checkins[dateKey] = true;
+    }
+
+    const oldXP = this.xp;
+    this.recalculateXP();
+    const xpGained = this.xp - oldXP;
+
+    this.save();
+    const newStreak = this.calcStreak(habit).current;
+    return { changed: true, checked: !wasChecked, streak: newStreak, xpGained };
+  }
+
+  calcStreakOnDate(habit, dateKey) {
+    if (!habit.checkins || !habit.checkins[dateKey]) return 0;
+    const checkins = habit.checkins;
+    let current = 0;
+    const targetDate = DateHelper.fromKey(dateKey);
+
+    if (habit.freqType === 'specific' && habit.specificDays && habit.specificDays.length > 0) {
+      const targetDays = new Set(habit.specificDays.map(Number));
+      let d = new Date(targetDate.getFullYear(), targetDate.getMonth(), targetDate.getDate());
+      if (!targetDays.has(d.getDay())) return 0;
+      while (checkins[DateHelper.toKey(d)]) {
+        current++;
+        d = DateHelper.addDays(d, -1);
+        while (!targetDays.has(d.getDay())) {
+          d = DateHelper.addDays(d, -1);
+        }
+      }
+    } else {
+      let d = new Date(targetDate.getFullYear(), targetDate.getMonth(), targetDate.getDate());
+      while (checkins[DateHelper.toKey(d)]) {
+        current++;
+        d = DateHelper.addDays(d, -1);
+      }
+    }
+    return current;
+  }
+
+  recalculateXP() {
+    let totalXP = 0;
+    this.habits.forEach(habit => {
+      if (!habit.checkins) return;
+      const keys = Object.keys(habit.checkins).sort(); // chronological
+      keys.forEach(key => {
+        totalXP += XPSystem.XP_PER_CHECKIN;
+        const streak = this.calcStreakOnDate(habit, key);
+        if (streak === 7) {
+          totalXP += XPSystem.XP_STREAK_BONUS_7;
+        } else if (streak === 30) {
+          totalXP += XPSystem.XP_STREAK_BONUS_30;
+        } else if (streak === 100) {
+          totalXP += XPSystem.XP_STREAK_BONUS_100;
+        }
+      });
+    });
+    this.xp = totalXP;
+  }
+
+  isCheckedToday(habit) {
+    return !!(habit.checkins && habit.checkins[DateHelper.todayKey()]);
+  }
+
+  // ─── Streak Calculation ───
+  /**
+   * Calculate current and longest streak from check-in data.
+   * Current streak: consecutive days ending at today (or yesterday if today not yet checked).
+   * For "specific days" habits, only count the target days.
+   */
+  calcStreak(habit) {
+    if (!habit.checkins) return { current: 0, longest: 0 };
+    const checkins = habit.checkins;
+    const today = new Date();
+    const todayKey = DateHelper.todayKey();
+    let current = 0;
+    let longest = 0;
+
+    if (habit.freqType === 'specific' && habit.specificDays && habit.specificDays.length > 0) {
+      // For specific-day habits: only count target days
+      const targetDays = new Set(habit.specificDays.map(Number));
+      let d = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+      // If today is not a target day, step back to last target day
+      while (!targetDays.has(d.getDay())) {
+        d = DateHelper.addDays(d, -1);
+      }
+      // If today is a target day but not checked, start from previous target day
+      if (DateHelper.toKey(d) === todayKey && !checkins[todayKey]) {
+        d = DateHelper.addDays(d, -1);
+        while (!targetDays.has(d.getDay())) {
+          d = DateHelper.addDays(d, -1);
+        }
+      }
+      // Count backwards through target days
+      while (checkins[DateHelper.toKey(d)]) {
+        current++;
+        d = DateHelper.addDays(d, -1);
+        while (!targetDays.has(d.getDay())) {
+          d = DateHelper.addDays(d, -1);
+        }
+      }
+      // Longest streak: scan all sorted dates
+      const sortedDates = Object.keys(checkins).sort();
+      let run = 0;
+      for (let i = 0; i < sortedDates.length; i++) {
+        const dateObj = DateHelper.fromKey(sortedDates[i]);
+        if (!targetDays.has(dateObj.getDay())) continue;
+        if (run === 0) { run = 1; }
+        else {
+          // Check if previous target day was checked
+          let prev = DateHelper.addDays(dateObj, -1);
+          while (!targetDays.has(prev.getDay())) {
+            prev = DateHelper.addDays(prev, -1);
+          }
+          if (checkins[DateHelper.toKey(prev)]) {
+            run++;
+          } else {
+            run = 1;
+          }
+        }
+        longest = Math.max(longest, run);
+      }
+    } else {
+      // Daily or weekly: count consecutive calendar days
+      let d = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+      // If today not checked, try from yesterday
+      if (!checkins[todayKey]) {
+        d = DateHelper.addDays(d, -1);
+      }
+      while (checkins[DateHelper.toKey(d)]) {
+        current++;
+        d = DateHelper.addDays(d, -1);
+      }
+      // Longest streak: scan all sorted dates
+      const sortedDates = Object.keys(checkins).sort();
+      let run = 0;
+      for (let i = 0; i < sortedDates.length; i++) {
+        if (i === 0) { run = 1; }
+        else {
+          const prev = DateHelper.fromKey(sortedDates[i - 1]);
+          const curr = DateHelper.fromKey(sortedDates[i]);
+          if (DateHelper.daysBetween(prev, curr) === 1) {
+            run++;
+          } else {
+            run = 1;
+          }
+        }
+        longest = Math.max(longest, run);
+      }
+    }
+    longest = Math.max(longest, current);
+    return { current, longest };
+  }
+
+  // ─── Weekly Progress ───
+  calcWeeklyProgress(habit) {
+    const today = new Date();
+    const weekStart = DateHelper.weekStart(today);
+    let count = 0;
+    for (let i = 0; i < 7; i++) {
+      const d = DateHelper.addDays(weekStart, i);
+      if (DateHelper.isFuture(d)) break;
+      const key = DateHelper.toKey(d);
+      if (habit.checkins && habit.checkins[key]) count++;
+    }
+    let target = 7;
+    if (habit.freqType === 'weekly') target = habit.weeklyCount || 3;
+    else if (habit.freqType === 'specific') target = (habit.specificDays || []).length;
+    return { count, target };
+  }
+
+  // ─── Monthly Completion Rate ───
+  calcMonthlyRate(habit) {
+    const today = new Date();
+    if (habit.freqType === 'weekly') {
+      const monthStart = DateHelper.monthStart(today);
+      const startMon = DateHelper.weekStart(monthStart);
+      const todayMon = DateHelper.weekStart(today);
+      
+      let totalWeeks = 0;
+      let completedWeeks = 0;
+      const target = habit.weeklyCount || 3;
+      
+      let currentMon = new Date(startMon);
+      while (currentMon <= todayMon) {
+        totalWeeks++;
+        let checkinCount = 0;
+        for (let i = 0; i < 7; i++) {
+          const d = DateHelper.addDays(currentMon, i);
+          const key = DateHelper.toKey(d);
+          if (habit.checkins && habit.checkins[key]) {
+            checkinCount++;
+          }
+        }
+        if (checkinCount >= target) {
+          completedWeeks++;
+        }
+        currentMon = DateHelper.addDays(currentMon, 7);
+      }
+      return totalWeeks > 0 ? Math.round((completedWeeks / totalWeeks) * 100) : 0;
+    }
+
+    const monthStart = DateHelper.monthStart(today);
+    let total = 0;
+    let checked = 0;
+    let d = new Date(monthStart);
+    while (d <= today) {
+      if (habit.freqType === 'specific') {
+        if (habit.specificDays && habit.specificDays.includes(d.getDay())) {
+          total++;
+          if (habit.checkins && habit.checkins[DateHelper.toKey(d)]) checked++;
+        }
+      } else {
+        total++;
+        if (habit.checkins && habit.checkins[DateHelper.toKey(d)]) checked++;
+      }
+      d = DateHelper.addDays(d, 1);
+    }
+    return total > 0 ? Math.round((checked / total) * 100) : 0;
+  }
+
+  // ─── Global Stats ───
+  calcGlobalStats() {
+    const todayKey = DateHelper.todayKey();
+    const totalHabits = this.habits.length;
+    let todayDone = 0;
+    let todayTotal = 0;
+    let longestOverall = 0;
+    let weeklyRateSum = 0;
+    let monthlyRateSum = 0;
+
+    this.habits.forEach(h => {
+      const isActiveToday = this.isHabitActiveToday(h);
+      if (isActiveToday) {
+        todayTotal++;
+        if (this.isCheckedToday(h)) todayDone++;
+      }
+      const { longest } = this.calcStreak(h);
+      longestOverall = Math.max(longestOverall, longest);
+      const wp = this.calcWeeklyProgress(h);
+      weeklyRateSum += wp.target > 0 ? (wp.count / wp.target) * 100 : 0;
+      monthlyRateSum += this.calcMonthlyRate(h);
+    });
+
+    const weeklyRate = totalHabits > 0 ? Math.round(weeklyRateSum / totalHabits) : 0;
+    const monthlyRate = totalHabits > 0 ? Math.round(monthlyRateSum / totalHabits) : 0;
+
+    return { totalHabits, todayDone, todayTotal, weeklyRate, monthlyRate, longestOverall };
+  }
+
+  /** Check if a habit is "active" today based on its frequency type */
+  isHabitActiveToday(habit) {
+    if (habit.freqType === 'specific') {
+      const today = new Date();
+      return (habit.specificDays || []).includes(today.getDay());
+    }
+    return true;
+  }
+
+  // ─── Reorder (Drag & Drop) ───
+  reorder(fromId, toId) {
+    const fromIdx = this.habits.findIndex(h => h.id === fromId);
+    const toIdx = this.habits.findIndex(h => h.id === toId);
+    if (fromIdx === -1 || toIdx === -1) return;
+    const [moved] = this.habits.splice(fromIdx, 1);
+    this.habits.splice(toIdx, 0, moved);
+    this.save();
+  }
+
+  // ─── Export / Import ───
+  exportData() {
+    const data = JSON.stringify({ habits: this.habits, xp: this.xp }, null, 2);
+    const blob = new Blob([data], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `habits_backup_${DateHelper.todayKey()}.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+
+  importData(jsonStr) {
+    try {
+      const data = JSON.parse(jsonStr);
+      if (!data || typeof data !== 'object') {
+        throw new Error('Format JSON tidak valid');
+      }
+      if (!Array.isArray(data.habits)) {
+        throw new Error('Data habits tidak ditemukan atau bukan array');
+      }
+
+      const validatedHabits = [];
+      const colors = ['#FFD700', '#FF6B9D', '#4D7FFF', '#7FFF6B', '#FFB347', '#E0BBE4', '#87CEEB', '#FFFFFF'];
+
+      for (const h of data.habits) {
+        if (!h || typeof h !== 'object') {
+          throw new Error('Ada entri habit yang bukan objek');
+        }
+        if (!h.name || typeof h.name !== 'string' || h.name.trim() === '') {
+          throw new Error('Nama habit wajib diisi dan harus teks');
+        }
+
+        const cleanHabit = {
+          id: typeof h.id === 'string' && h.id.trim() !== '' ? h.id.trim() : generateId(),
+          name: h.name.trim(),
+          emoji: typeof h.emoji === 'string' ? h.emoji.trim() : '⭐',
+          color: colors.includes(h.color) ? h.color : '#FFD700',
+          freqType: ['daily', 'weekly', 'specific'].includes(h.freqType) ? h.freqType : 'daily',
+          weeklyCount: typeof h.weeklyCount === 'number' && h.weeklyCount >= 1 && h.weeklyCount <= 7 ? h.weeklyCount : 3,
+          specificDays: Array.isArray(h.specificDays) ? h.specificDays.map(Number).filter(n => !isNaN(n) && n >= 0 && n <= 6) : [],
+          duration: typeof h.duration === 'string' ? h.duration.trim() : '',
+          checkins: {},
+          createdAt: typeof h.createdAt === 'string' && h.createdAt.match(/^\d{4}-\d{2}-\d{2}$/) ? h.createdAt : DateHelper.todayKey()
+        };
+
+        if (h.checkins && typeof h.checkins === 'object' && !Array.isArray(h.checkins)) {
+          for (const key of Object.keys(h.checkins)) {
+            if (key.match(/^\d{4}-\d{2}-\d{2}$/) && h.checkins[key] === true) {
+              try {
+                const checkDate = DateHelper.fromKey(key);
+                if (!DateHelper.isFuture(checkDate)) {
+                  cleanHabit.checkins[key] = true;
+                }
+              } catch (e) {}
+            }
+          }
+        }
+
+        validatedHabits.push(cleanHabit);
+      }
+
+      this.habits = validatedHabits;
+      
+      let importedXP = 0;
+      if (typeof data.xp === 'number' && !isNaN(data.xp) && data.xp >= 0) {
+        importedXP = Math.min(data.xp, 1000000);
+      }
+      this.xp = importedXP;
+      
+      this.recalculateXP();
+      this.save();
+      this.showGlobalToast('Import data berhasil!', 'success');
+      return { success: true };
+    } catch (e) {
+      this.showGlobalToast('Import gagal: ' + e.message, 'error');
+      return { success: false, error: e.message };
+    }
+  }
+
+  resetAll() {
+    this.habits = [];
+    this.xp = 0;
+    this.save();
+    this.showGlobalToast('Semua data berhasil di-reset!', 'success');
+  }
+
+  // ─── Event Binding (Delegation) ───
+  bindEvents() {
+    const $ = (sel) => document.querySelector(sel);
+    const grid = $('#habitsGrid');
+
+    // Add habit button
+    $('#btnAddHabit').addEventListener('click', () => this.openHabitModal());
+
+    // Form submit
+    $('#habitForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      this.handleFormSubmit();
+    });
+
+    // Frequency type change
+    $('#habitFreqType').addEventListener('change', (e) => {
+      this.toggleFreqFields(e.target.value);
+    });
+
+    // Color picker (delegation)
+    $('#colorPicker').addEventListener('click', (e) => {
+      const swatch = e.target.closest('.color-swatch');
+      if (!swatch) return;
+      document.querySelectorAll('#colorPicker .color-swatch').forEach(s => s.classList.remove('selected'));
+      swatch.classList.add('selected');
+    });
+
+    // Day picker (delegation)
+    $('#dayPicker').addEventListener('click', (e) => {
+      const chip = e.target.closest('.day-chip');
+      if (!chip) return;
+      chip.classList.toggle('selected');
+    });
+
+    // Filter & Sort
+    $('#filterSelect').addEventListener('change', () => this.render());
+    $('#sortSelect').addEventListener('change', () => this.render());
+
+    // Export
+    $('#btnExport').addEventListener('click', () => this.exportData());
+
+     // Import
+    $('#btnImport').addEventListener('click', () => $('#importFile').click());
+    $('#importFile').addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        const result = this.importData(ev.target.result);
+        if (result.success) {
+          this.render();
+        }
+      };
+      reader.readAsText(file);
+      e.target.value = '';
+    });
+
+    // Reset
+    $('#btnReset').addEventListener('click', () => this.openModal('resetModal'));
+    $('#btnConfirmReset').addEventListener('click', () => {
+      const input = $('#resetConfirmInput');
+      if (input.value.trim().toUpperCase() !== 'RESET') {
+        this.showInlineError('resetError', 'Ketik "RESET" untuk konfirmasi!');
+        input.classList.add('error');
+        input.parentElement.querySelector('.error-msg').classList.add('anim-shake');
+        return;
+      }
+      this.resetAll();
+      this.closeModal('resetModal');
+      input.value = '';
+      input.classList.remove('error');
+      this.render();
+    });
+
+    // Delete confirm
+    $('#btnConfirmDelete').addEventListener('click', () => {
+      if (this.deleteTargetId) {
+        this.deleteHabit(this.deleteTargetId);
+        this.deleteTargetId = null;
+        this.closeModal('deleteModal');
+        this.render();
+      }
+    });
+
+    // Grid delegation: check-in, edit, delete, calendar clicks, drag
+    grid.addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-action]');
+      if (!btn) return;
+      const action = btn.dataset.action;
+      const habitId = btn.dataset.habitId;
+      const dateKey = btn.dataset.dateKey;
+
+      if (action === 'checkin') {
+        this.handleCheckIn(habitId, DateHelper.todayKey(), btn);
+      } else if (action === 'edit') {
+        this.openHabitModal(habitId);
+      } else if (action === 'delete') {
+        this.openDeleteModal(habitId);
+      } else if (action === 'cal-toggle' && dateKey && habitId) {
+        if (!ALLOW_PAST_CHECKIN && dateKey !== DateHelper.todayKey()) {
+          this.showGlobalToast('Mengubah tanggal lampau dinonaktifkan di setelan!', 'error');
+          if (btn) {
+            btn.classList.add('anim-shake');
+            setTimeout(() => btn.classList.remove('anim-shake'), 400);
+          }
+          return;
+        }
+        this.handleCheckIn(habitId, dateKey, btn);
+      }
+    });
+
+    // Drag & drop on grid (desktop)
+    grid.addEventListener('dragstart', (e) => {
+      const card = e.target.closest('.habit-card');
+      if (!card) return;
+      this.dragState.dragId = card.dataset.id;
+      card.classList.add('dragging');
+      e.dataTransfer.effectAllowed = 'move';
+      e.dataTransfer.setData('text/plain', card.dataset.id);
+    });
+    grid.addEventListener('dragend', (e) => {
+      const card = e.target.closest('.habit-card');
+      if (card) card.classList.remove('dragging');
+      document.querySelectorAll('.habit-card.drag-over').forEach(c => c.classList.remove('drag-over'));
+    });
+    grid.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      const card = e.target.closest('.habit-card');
+      if (card && card.dataset.id !== this.dragState.dragId) {
+        card.classList.add('drag-over');
+      }
+    });
+    grid.addEventListener('dragleave', (e) => {
+      const card = e.target.closest('.habit-card');
+      if (card) card.classList.remove('drag-over');
+    });
+    grid.addEventListener('drop', (e) => {
+      e.preventDefault();
+      const card = e.target.closest('.habit-card');
+      if (!card) return;
+      card.classList.remove('drag-over');
+      const fromId = this.dragState.dragId;
+      const toId = card.dataset.id;
+      if (fromId && toId && fromId !== toId) {
+        this.reorder(fromId, toId);
+        this.render();
+      }
+    });
+
+    // Touch-based drag & drop reorder for mobile
+    let touchStartCard = null;
+    grid.addEventListener('touchstart', (e) => {
+      const emojiHandle = e.target.closest('.habit-emoji');
+      if (!emojiHandle) return;
+      const card = e.target.closest('.habit-card');
+      if (!card) return;
+      touchStartCard = card;
+      card.classList.add('dragging');
+      e.preventDefault();
+    }, { passive: false });
+
+    grid.addEventListener('touchmove', (e) => {
+      if (!touchStartCard) return;
+      e.preventDefault();
+      const touch = e.touches[0];
+      const elem = document.elementFromPoint(touch.clientX, touch.clientY);
+      document.querySelectorAll('.habit-card').forEach(c => c.classList.remove('drag-over'));
+      if (elem) {
+        const targetCard = elem.closest('.habit-card');
+        if (targetCard && targetCard !== touchStartCard) {
+          targetCard.classList.add('drag-over');
+        }
+      }
+    }, { passive: false });
+
+    grid.addEventListener('touchend', (e) => {
+      if (!touchStartCard) return;
+      touchStartCard.classList.remove('dragging');
+      const touch = e.changedTouches[0];
+      const elem = document.elementFromPoint(touch.clientX, touch.clientY);
+      document.querySelectorAll('.habit-card').forEach(c => c.classList.remove('drag-over'));
+      if (elem) {
+        const targetCard = elem.closest('.habit-card');
+        if (targetCard && targetCard !== touchStartCard) {
+          const fromId = touchStartCard.dataset.id;
+          const toId = targetCard.dataset.id;
+          if (fromId && toId) {
+            this.reorder(fromId, toId);
+            this.render();
+          }
+        }
+      }
+      touchStartCard = null;
+    });
+
+    // Modal close: overlay click, close buttons, Escape
+    document.addEventListener('click', (e) => {
+      if (e.target.classList.contains('modal-overlay')) {
+        const id = e.target.id;
+        this.closeModal(id);
+      }
+      const closeBtn = e.target.closest('[data-close-modal]');
+      if (closeBtn) {
+        this.closeModal(closeBtn.dataset.closeModal);
+      }
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        document.querySelectorAll('.modal-overlay.active').forEach(m => {
+          this.closeModal(m.id);
+        });
+      }
+    });
+  }
+
+  // ─── Modal Helpers ───
+  openModal(id) {
+    document.getElementById(id).classList.add('active');
+  }
+  closeModal(id) {
+    const modal = document.getElementById(id);
+    if (modal) modal.classList.remove('active');
+  }
+
+  // ─── Inline Error ───
+  showInlineError(elId, msg) {
+    const el = document.getElementById(elId);
+    if (!el) return;
+    el.textContent = msg;
+    el.classList.add('show');
+    el.classList.remove('anim-shake');
+    void el.offsetWidth; // force reflow
+    el.classList.add('anim-shake');
+  }
+  clearInlineError(elId) {
+    const el = document.getElementById(elId);
+    if (el) { el.textContent = ''; el.classList.remove('show', 'anim-shake'); }
+  }
+
+  // ─── Frequency Fields Toggle ───
+  toggleFreqFields(type) {
+    document.getElementById('weeklyCountGroup').style.display = type === 'weekly' ? 'block' : 'none';
+    document.getElementById('specificDaysGroup').style.display = type === 'specific' ? 'block' : 'none';
+  }
+
+  // ─── Habit Form Modal ───
+  openHabitModal(editId) {
+    const $ = (sel) => document.querySelector(sel);
+    const isEdit = !!editId;
+    $('#habitModalTitle').textContent = isEdit ? '✏️ EDIT HABIT' : '➕ TAMBAH HABIT BARU';
+    $('#habitSubmitBtn').textContent = isEdit ? 'Update' : 'Simpan';
+    $('#habitEditId').value = editId || '';
+    this.clearInlineError('habitNameError');
+    $('#habitName').classList.remove('error');
+
+    if (isEdit) {
+      const h = this.getHabit(editId);
+      if (!h) return;
+      $('#habitName').value = h.name;
+      $('#habitEmoji').value = h.emoji || '';
+      $('#habitFreqType').value = h.freqType || 'daily';
+      $('#habitWeeklyCount').value = h.weeklyCount || 3;
+      $('#habitDuration').value = h.duration || '';
+      // Color
+      document.querySelectorAll('#colorPicker .color-swatch').forEach(s => {
+        s.classList.toggle('selected', s.dataset.color === h.color);
+      });
+      // Days
+      document.querySelectorAll('#dayPicker .day-chip').forEach(c => {
+        c.classList.toggle('selected', (h.specificDays || []).includes(parseInt(c.dataset.day)));
+      });
+      this.toggleFreqFields(h.freqType || 'daily');
+    } else {
+      $('#habitName').value = '';
+      $('#habitEmoji').value = '';
+      $('#habitFreqType').value = 'daily';
+      $('#habitWeeklyCount').value = 3;
+      $('#habitDuration').value = '';
+      document.querySelectorAll('#colorPicker .color-swatch').forEach((s, i) => {
+        s.classList.toggle('selected', i === 0);
+      });
+      document.querySelectorAll('#dayPicker .day-chip').forEach(c => c.classList.remove('selected'));
+      this.toggleFreqFields('daily');
+    }
+    this.openModal('habitModal');
+    setTimeout(() => $('#habitName').focus(), 100);
+  }
+
+  handleFormSubmit() {
+    const $ = (sel) => document.querySelector(sel);
+    const name = $('#habitName').value.trim();
+    const editId = $('#habitEditId').value || null;
+
+    // Validate name
+    if (!name) {
+      this.showInlineError('habitNameError', 'Nama habit wajib diisi!');
+      $('#habitName').classList.add('error');
+      return;
+    }
+    if (this.isDuplicateName(name, editId)) {
+      this.showInlineError('habitNameError', 'Nama habit sudah ada! Gunakan nama lain.');
+      $('#habitName').classList.add('error');
+      return;
+    }
+    this.clearInlineError('habitNameError');
+    $('#habitName').classList.remove('error');
+
+    const emoji = $('#habitEmoji').value.trim() || '⭐';
+    const color = document.querySelector('#colorPicker .color-swatch.selected')?.dataset.color || '#FFD700';
+    const freqType = $('#habitFreqType').value;
+    const weeklyCount = parseInt($('#habitWeeklyCount').value) || 3;
+    const specificDays = Array.from(document.querySelectorAll('#dayPicker .day-chip.selected')).map(c => parseInt(c.dataset.day));
+    const duration = $('#habitDuration').value.trim();
+
+    if (freqType === 'specific' && specificDays.length === 0) {
+      this.showInlineError('habitNameError', 'Pilih minimal satu hari!');
+      return;
+    }
+
+    if (editId) {
+      this.updateHabit(editId, { name, emoji, color, freqType, weeklyCount, specificDays, duration });
+    } else {
+      this.addHabit({
+        id: generateId(),
+        name,
+        emoji,
+        color,
+        freqType,
+        weeklyCount,
+        specificDays,
+        duration,
+        checkins: {},
+        createdAt: DateHelper.todayKey()
+      });
+    }
+    this.closeModal('habitModal');
+    this.render();
+  }
+
+  // ─── Delete Modal ───
+  openDeleteModal(habitId) {
+    const h = this.getHabit(habitId);
+    if (!h) return;
+    this.deleteTargetId = habitId;
+    document.getElementById('deleteConfirmText').textContent = `Yakin ingin menghapus "${h.emoji} ${h.name}"?`;
+    this.openModal('deleteModal');
+  }
+
+  // ─── Check-In Handler ───
+  handleCheckIn(habitId, dateKey, triggerEl) {
+    const result = this.toggleCheckIn(habitId, dateKey);
+    if (!result.changed) {
+      if (triggerEl) {
+        triggerEl.classList.add('anim-shake');
+        setTimeout(() => triggerEl.classList.remove('anim-shake'), 400);
+      }
+      return;
+    }
+
+    // Dynamic stats and level updates
+    this.renderStats();
+    this.renderXP();
+
+    // Partial DOM update: update only the targeted card
+    const cardEl = document.querySelector(`.habit-card[data-id="${habitId}"]`);
+    if (cardEl) {
+      const habit = this.getHabit(habitId);
+      if (habit) {
+        const idx = this.habits.findIndex(h => h.id === habitId);
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = this.renderCard(habit, idx);
+        const newCardEl = tempDiv.firstElementChild;
+        cardEl.replaceWith(newCardEl);
+
+        if (result.checked) {
+          const newBtn = newCardEl.querySelector('[data-action="checkin"]');
+          if (newBtn) {
+            newBtn.classList.add('anim-stamp');
+            setTimeout(() => newBtn.classList.remove('anim-stamp'), 350);
+          }
+        }
+      }
+    } else {
+      this.render();
+    }
+
+    // Confetti on milestone
+    if (result.checked && [7, 30, 100].includes(result.streak)) {
+      this.spawnConfetti();
+    }
+  }
+
+  // ─── Confetti Effect ───
+  spawnConfetti() {
+    const colors = ['#FFD700', '#FF6B9D', '#4D7FFF', '#7FFF6B', '#FF4444', '#E0BBE4'];
+    const shapes = ['square', 'circle'];
+    for (let i = 0; i < 40; i++) {
+      const el = document.createElement('div');
+      el.className = 'confetti-particle';
+      el.style.left = Math.random() * 100 + 'vw';
+      el.style.background = colors[Math.floor(Math.random() * colors.length)];
+      el.style.width = (6 + Math.random() * 10) + 'px';
+      el.style.height = (6 + Math.random() * 10) + 'px';
+      if (shapes[Math.floor(Math.random() * 2)] === 'circle') el.style.borderRadius = '50%';
+      el.style.animationDuration = (1.5 + Math.random() * 2) + 's';
+      el.style.animationDelay = (Math.random() * 0.5) + 's';
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 4000);
+    }
+  }
+
+  // ─── Count-Up Animation ───
+  animateNumber(el, targetVal, suffix) {
+    suffix = suffix || '';
+    const start = parseInt(el.textContent) || 0;
+    if (start === targetVal && !suffix) return;
+    const duration = 500;
+    const startTime = performance.now();
+    const animate = (now) => {
+      const elapsed = now - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const current = Math.round(start + (targetVal - start) * eased);
+      el.textContent = current + suffix;
+      if (progress < 1) requestAnimationFrame(animate);
+    };
+    requestAnimationFrame(animate);
+  }
+
+  // ─── Render Everything ───
+  render() {
+    this.renderStats();
+    this.renderXP();
+    this.renderHabits();
+  }
+
+  renderXP() {
+    const info = XPSystem.calcLevel(this.xp);
+    document.getElementById('levelBadge').textContent = 'LVL ' + info.level;
+    const pct = info.neededXP > 0 ? Math.min((info.currentLevelXP / info.neededXP) * 100, 100) : 0;
+    document.getElementById('xpBarFill').style.width = pct + '%';
+    document.getElementById('xpText').textContent = `${info.currentLevelXP} / ${info.neededXP} XP`;
+  }
+
+  renderStats() {
+    const stats = this.calcGlobalStats();
+    const totalEl = document.getElementById('statTotalHabits');
+    const todayEl = document.getElementById('statTodayCheckin');
+    const weeklyEl = document.getElementById('statWeeklyRate');
+    const monthlyEl = document.getElementById('statMonthlyRate');
+    const streakEl = document.getElementById('statLongestStreak');
+
+    this.animateNumber(totalEl, stats.totalHabits, '');
+    todayEl.textContent = `${stats.todayDone}/${stats.todayTotal}`;
+    this.animateNumber(weeklyEl, stats.weeklyRate, '%');
+    this.animateNumber(monthlyEl, stats.monthlyRate, '%');
+    this.animateNumber(streakEl, stats.longestOverall, '');
+  }
+
+  renderHabits() {
+    const grid = document.getElementById('habitsGrid');
+    let habits = [...this.habits];
+    const filter = document.getElementById('filterSelect').value;
+    const sort = document.getElementById('sortSelect').value;
+
+    // Filter
+    if (filter === 'done') {
+      habits = habits.filter(h => this.isCheckedToday(h));
+    } else if (filter === 'pending') {
+      habits = habits.filter(h => !this.isCheckedToday(h));
+    }
+
+    // Sort
+    if (sort === 'name') {
+      habits.sort((a, b) => a.name.localeCompare(b.name));
+    } else if (sort === 'streak') {
+      habits.sort((a, b) => this.calcStreak(b).longest - this.calcStreak(a).longest);
+    } else if (sort === 'rate') {
+      habits.sort((a, b) => this.calcMonthlyRate(b) - this.calcMonthlyRate(a));
+    }
+
+    if (habits.length === 0 && this.habits.length === 0) {
+      grid.innerHTML = `
+        <div class="empty-state anim-pop-in">
+          <div class="empty-emoji">🌱</div>
+          <h2>Belum Ada Habit</h2>
+          <p>Mulai bangun kebiasaan baik! Klik tombol "Tambah Habit" di atas.</p>
+          <button class="btn btn-primary" onclick="tracker.openHabitModal()">➕ Tambah Habit Pertama</button>
+        </div>`;
+      return;
+    }
+    if (habits.length === 0) {
+      grid.innerHTML = `
+        <div class="empty-state anim-pop-in">
+          <div class="empty-emoji">🔍</div>
+          <h2>Tidak Ada Hasil</h2>
+          <p>Coba ubah filter atau sort.</p>
+        </div>`;
+      return;
+    }
+
+    grid.innerHTML = habits.map((h, idx) => this.renderCard(h, idx)).join('');
+  }
+
+  renderCard(habit, idx) {
+    const todayKey = DateHelper.todayKey();
+    const checked = this.isCheckedToday(habit);
+    const streak = this.calcStreak(habit);
+    const weekly = this.calcWeeklyProgress(habit);
+    const weeklyPct = weekly.target > 0 ? Math.min(Math.round((weekly.count / weekly.target) * 100), 100) : 0;
+    const monthlyRate = this.calcMonthlyRate(habit);
+
+    // XSS Sanitization: escape all user-controlled strings
+    const nameEscaped = this.escapeHtml(habit.name);
+    const emojiEscaped = this.escapeHtml(habit.emoji);
+    const colorEscaped = this.escapeHtml(habit.color);
+    const durationEscaped = this.escapeHtml(habit.duration);
+
+    // Frequency label
+    let freqLabel = 'Harian';
+    if (habit.freqType === 'weekly') freqLabel = `${habit.weeklyCount}x / minggu`;
+    else if (habit.freqType === 'specific') {
+      const dayNames = ['Min','Sen','Sel','Rab','Kam','Jum','Sab'];
+      freqLabel = (habit.specificDays || []).map(d => dayNames[d]).join(', ');
+    }
+
+    const durationLabel = durationEscaped ? ` · 🎯 ${durationEscaped}` : '';
+    const animClass = idx % 3 === 0 ? 'anim-pop-left' : idx % 3 === 1 ? 'anim-pop-right' : 'anim-pop-in';
+
+    // Mini calendar: last 35 days (5 weeks)
+    const calendarHTML = this.renderMiniCalendar(habit);
+
+    return `
+    <div class="habit-card ${animClass}" data-id="${habit.id}" draggable="true"
+         style="background:${colorEscaped};">
+      <div class="habit-card-header">
+        <span class="habit-emoji" title="Drag untuk reorder">${emojiEscaped}</span>
+        <div style="flex:1">
+          <div class="habit-name">${nameEscaped}</div>
+          <div class="habit-meta">📅 ${freqLabel}${durationLabel}</div>
+        </div>
+        <div class="habit-actions">
+          <button class="btn-icon" data-action="edit" data-habit-id="${habit.id}" title="Edit">✏️</button>
+          <button class="btn-icon" data-action="delete" data-habit-id="${habit.id}" title="Hapus">🗑️</button>
+        </div>
+      </div>
+
+      <div class="checkin-area">
+        <button class="checkin-btn ${checked ? 'checked' : 'unchecked'}"
+                data-action="checkin" data-habit-id="${habit.id}"
+                title="${checked ? 'Batalkan check-in' : 'Check-in hari ini'}">
+          ${checked ? '✅' : '⬜'}
+        </button>
+        <div>
+          <div class="checkin-status ${checked ? 'done' : 'pending'}">
+            ${checked ? '✔ Sudah Dilakukan!' : '⏳ Belum Hari Ini'}
+          </div>
+          <div style="font-size:0.75rem;font-weight:700;color:var(--black);margin-top:2px">
+            ${DateHelper.format(new Date())}
+          </div>
+        </div>
+      </div>
+
+      <div class="streak-row">
+        <span>🔥 Streak: <strong>${streak.current}</strong></span>
+        <span>🏆 Best: <strong>${streak.longest}</strong></span>
+        <span>📊 Bulan: <strong>${monthlyRate}%</strong></span>
+      </div>
+
+      <div class="weekly-progress">
+        <div class="weekly-progress-label">
+          <span>Progress Minggu Ini</span>
+          <span>${weekly.count}/${weekly.target}</span>
+        </div>
+        <div class="progress-bar-wrap">
+          <div class="progress-bar-fill" style="width:${weeklyPct}%;background:${this.darkenColor(colorEscaped)}"></div>
+        </div>
+      </div>
+
+      ${calendarHTML}
+    </div>`;
+  }
+
+  renderMiniCalendar(habit) {
+    const today = new Date();
+    const todayKey = DateHelper.todayKey();
+    const dayLabels = ['Sen','Sel','Rab','Kam','Jum','Sab','Min'];
+    const thisWeekMon = DateHelper.weekStart(today);
+    const startDate = DateHelper.addDays(thisWeekMon, -28);
+
+    const colorEscaped = this.escapeHtml(habit.color);
+
+    let cells = '';
+    cells += dayLabels.map(d => `<div class="mini-cal-day-label">${d}</div>`).join('');
+
+    for (let i = 0; i < 35; i++) {
+      const d = DateHelper.addDays(startDate, i);
+      const key = DateHelper.toKey(d);
+      const isFuture = DateHelper.isFuture(d);
+      const isChecked = habit.checkins && habit.checkins[key];
+      const dateFormatted = DateHelper.format(d);
+
+      let cls = 'mini-cal-cell';
+      let style = '';
+      if (isFuture) {
+        cls += ' future';
+      } else if (isChecked) {
+        cls += ' checked';
+        style = `background:${this.darkenColor(colorEscaped)};`;
+      } else {
+        cls += ' unchecked';
+      }
+
+      const action = isFuture ? '' : `data-action="cal-toggle" data-habit-id="${habit.id}" data-date-key="${key}"`;
+
+      cells += `<div class="${cls}" style="${style}" ${action} tabindex="0">
+        <span class="tooltip">${dateFormatted}${isChecked ? ' ✅' : ''}</span>
+      </div>`;
+    }
+
+    return `
+    <div class="mini-calendar">
+      <div class="mini-calendar-title">
+        <span>📅 5 Minggu Terakhir</span>
+      </div>
+      <div class="mini-cal-grid">${cells}</div>
+    </div>`;
+  }
+
+  // ─── Utility: darken a hex color for progress bars ───
+  darkenColor(hex) {
+    // Simple darkening: mix with black
+    const map = {
+      '#FFD700': '#C9A800',
+      '#FF6B9D': '#D4527E',
+      '#4D7FFF': '#3360CC',
+      '#7FFF6B': '#4DC93E',
+      '#FFB347': '#D18F2E',
+      '#E0BBE4': '#B090B6',
+      '#87CEEB': '#5DA5C4',
+      '#FFFFFF': '#AAAAAA'
+    };
+    return map[hex] || '#888888';
+  }
+
+  escapeHtml(str) {
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+}
+
+// ─── Initialize ───
+const tracker = new HabitTracker();
+</script>
+</body>
+</html>
