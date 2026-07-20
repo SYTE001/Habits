@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +10,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Archivo+Black&display=swap" rel="stylesheet">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔥</text></svg>">
 <meta property="og:title" content="HABITS — Neo-Brutalism Habit Tracker">
-<meta property="og:description" content="Bangun kebiasaan baik dengan Habit Tracker bertema Neo-Brutalism yang interaktif, fungsional, dan keren!">
+<meta property="og:description" content="Build good habits with an interactive, functional, and cool Neo-Brutalism themed Habit Tracker!">
 <meta property="og:type" content="website">
 <style>
 /* ===== RESET & BASE ===== */
@@ -43,8 +43,6 @@ body {
   min-height: 100vh;
   line-height: 1.5;
   overflow-x: hidden;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
 }
 
@@ -55,14 +53,14 @@ body {
   100% { transform: scale(1); opacity: 1; }
 }
 @keyframes popInRotateLeft {
-  0% { transform: scale(0.8) rotate(0deg); opacity: 0; }
-  50% { transform: scale(1.05) rotate(-1.5deg); }
-  100% { transform: scale(1) rotate(-1deg); opacity: 1; }
+  0% { transform: scale(0.8); opacity: 0; }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); opacity: 1; }
 }
 @keyframes popInRotateRight {
-  0% { transform: scale(0.8) rotate(0deg); opacity: 0; }
-  50% { transform: scale(1.05) rotate(2.5deg); }
-  100% { transform: scale(1) rotate(2deg); opacity: 1; }
+  0% { transform: scale(0.8); opacity: 0; }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); opacity: 1; }
 }
 @keyframes shake {
   0%, 100% { transform: translateX(0); }
@@ -148,7 +146,7 @@ body {
   font-family: var(--font-heading);
   font-size: 0.85rem;
   background: var(--blue);
-  color: var(--white);
+  color: var(--black);
   border: 2px solid var(--black);
   border-radius: 4px;
   padding: 2px 8px;
@@ -209,10 +207,10 @@ body {
 .btn:hover { transform: translate(-2px, -2px); box-shadow: 8px 8px 0px var(--black); }
 .btn:active { transform: translate(4px, 4px); box-shadow: var(--shadow-active); }
 .btn-primary { background: var(--yellow); }
-.btn-pink { background: var(--pink); color: var(--white); }
-.btn-blue { background: var(--blue); color: var(--white); }
+.btn-pink { background: var(--pink); }
+.btn-blue { background: var(--blue); }
 .btn-green { background: var(--green); }
-.btn-red { background: var(--red); color: var(--white); }
+.btn-red { background: var(--red); }
 .btn-sm { padding: 5px 10px; font-size: 0.75rem; box-shadow: 3px 3px 0px var(--black); }
 .btn-sm:hover { box-shadow: 5px 5px 0px var(--black); }
 .btn-sm:active { transform: translate(3px, 3px); box-shadow: 1px 1px 0px var(--black); }
@@ -239,11 +237,11 @@ body {
   box-shadow: 4px 4px 0px var(--red);
 }
 .error-msg {
-  color: var(--red);
+  color: #B71C1C;
   font-size: 0.78rem;
   font-weight: 700;
   background: #FFF0F0;
-  border: 2px solid var(--red);
+  border: 2px solid #B71C1C;
   border-radius: 4px;
   padding: 4px 8px;
   margin-top: 4px;
@@ -271,9 +269,10 @@ body {
 }
 .stat-card:hover { transform: translate(-2px, -2px); box-shadow: 8px 8px 0px var(--black); }
 .stat-card .stat-number {
-  font-family: var(--font-heading);
-  font-size: 2rem;
-  line-height: 1;
+  font-family: var(--font-main);
+  font-weight: 700;
+  font-size: 2.2rem;
+  line-height: 1.1;
   margin-bottom: 4px;
   color: var(--black);
 }
@@ -495,7 +494,7 @@ body {
   bottom: 24px;
   right: 24px;
   background: var(--pink);
-  color: var(--white);
+  color: var(--black);
   border: var(--border-thick);
   border-radius: var(--radius);
   box-shadow: 6px 6px 0px var(--black);
@@ -509,7 +508,7 @@ body {
 }
 .global-toast.active { display: flex; }
 .global-toast.success { background: var(--green); color: var(--black); }
-.global-toast.error { background: var(--red); color: var(--white); }
+.global-toast.error { background: var(--red); color: var(--black); }
 
 /* ===== EMPTY STATE ===== */
 .empty-state {
@@ -519,7 +518,6 @@ body {
   border: var(--border-thick);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
-  transform: rotate(-1deg);
 }
 .empty-state .empty-emoji { font-size: 4rem; margin-bottom: 16px; }
 .empty-state h2 {
@@ -620,7 +618,7 @@ body {
   user-select: none;
 }
 .day-chip:active { transform: translate(2px, 2px); box-shadow: 0 0 0; }
-.day-chip.selected { background: var(--blue); color: var(--white); }
+.day-chip.selected { background: var(--blue); color: var(--black); }
 .modal-actions {
   display: flex;
   gap: 10px;
@@ -697,26 +695,26 @@ body {
 
 <!-- STATS BAR -->
 <section class="stats-bar" id="statsBar">
-  <div class="stat-card"><div class="stat-number" id="statTotalHabits" data-target="0">0</div><div class="stat-label">Habit Aktif</div></div>
-  <div class="stat-card"><div class="stat-number" id="statTodayCheckin" data-target="0">0/0</div><div class="stat-label">Check-in Hari Ini</div></div>
-  <div class="stat-card"><div class="stat-number" id="statWeeklyRate" data-target="0">0%</div><div class="stat-label">Rate Mingguan</div></div>
-  <div class="stat-card"><div class="stat-number" id="statMonthlyRate" data-target="0">0%</div><div class="stat-label">Rate Bulanan</div></div>
-  <div class="stat-card"><div class="stat-number" id="statLongestStreak" data-target="0">0</div><div class="stat-label">Streak Terpanjang</div></div>
+  <div class="stat-card"><div class="stat-number" id="statTotalHabits" data-target="0">0</div><div class="stat-label">Active Habits</div></div>
+  <div class="stat-card"><div class="stat-number" id="statTodayCheckin" data-target="0">0/0</div><div class="stat-label">Today's Check-in</div></div>
+  <div class="stat-card"><div class="stat-number" id="statWeeklyRate" data-target="0">0%</div><div class="stat-label">Weekly Rate</div></div>
+  <div class="stat-card"><div class="stat-number" id="statMonthlyRate" data-target="0">0%</div><div class="stat-label">Monthly Rate</div></div>
+  <div class="stat-card"><div class="stat-number" id="statLongestStreak" data-target="0">0</div><div class="stat-label">Longest Streak</div></div>
 </section>
 
 <!-- TOOLBAR -->
 <div class="toolbar">
   <div class="toolbar-left">
-    <button class="btn btn-primary" id="btnAddHabit">➕ Tambah Habit</button>
+    <button class="btn btn-primary" id="btnAddHabit">➕ Add Habit</button>
     <select class="neo-select" id="filterSelect">
-      <option value="all">🔍 Semua</option>
-      <option value="done">✅ Selesai Hari Ini</option>
-      <option value="pending">⏳ Belum Selesai</option>
+      <option value="all">🔍 All</option>
+      <option value="done">✅ Done Today</option>
+      <option value="pending">⏳ Pending</option>
     </select>
     <select class="neo-select" id="sortSelect">
-      <option value="order">📋 Urutan Manual</option>
-      <option value="name">🔤 Nama</option>
-      <option value="streak">🔥 Streak Terpanjang</option>
+      <option value="order">📋 Manual Order</option>
+      <option value="name">🔤 Name</option>
+      <option value="streak">🔥 Longest Streak</option>
       <option value="rate">📊 Completion Rate</option>
     </select>
   </div>
@@ -737,12 +735,12 @@ body {
 <div class="modal-overlay" id="habitModal">
   <div class="modal">
     <button class="modal-close" data-close-modal="habitModal">&times;</button>
-    <h2 id="habitModalTitle">➕ TAMBAH HABIT BARU</h2>
+    <h2 id="habitModalTitle">➕ ADD NEW HABIT</h2>
     <form id="habitForm" autocomplete="off">
       <input type="hidden" id="habitEditId">
       <div class="form-group">
-        <label for="habitName">Nama Habit *</label>
-        <input class="neo-input" type="text" id="habitName" placeholder="Contoh: Olahraga Pagi" maxlength="50">
+        <label for="habitName">Habit Name *</label>
+        <input class="neo-input" type="text" id="habitName" placeholder="e.g., Morning Exercise" maxlength="50">
         <div class="error-msg" id="habitNameError"></div>
       </div>
       <div class="form-group">
@@ -750,7 +748,7 @@ body {
         <input class="neo-input" type="text" id="habitEmoji" placeholder="💪" maxlength="4" style="width:80px">
       </div>
       <div class="form-group">
-        <label>Warna Kartu</label>
+        <label>Card Color</label>
         <div class="color-picker-row" id="colorPicker">
           <div class="color-swatch selected" data-color="#FFD700" style="background:#FFD700"></div>
           <div class="color-swatch" data-color="#FF6B9D" style="background:#FF6B9D"></div>
@@ -763,36 +761,36 @@ body {
         </div>
       </div>
       <div class="form-group">
-        <label for="habitFreqType">Frekuensi Target</label>
+        <label for="habitFreqType">Target Frequency</label>
         <select class="neo-select" id="habitFreqType">
-          <option value="daily">Harian (Setiap Hari)</option>
-          <option value="weekly">X Kali per Minggu</option>
-          <option value="specific">Hari Tertentu</option>
+          <option value="daily">Daily (Every Day)</option>
+          <option value="weekly">X Times per Week</option>
+          <option value="specific">Specific Days</option>
         </select>
       </div>
       <div class="form-group" id="weeklyCountGroup" style="display:none">
-        <label for="habitWeeklyCount">Berapa kali per minggu?</label>
+        <label for="habitWeeklyCount">How many times per week?</label>
         <input class="neo-input" type="number" id="habitWeeklyCount" min="1" max="7" value="3" style="width:80px">
       </div>
       <div class="form-group" id="specificDaysGroup" style="display:none">
-        <label>Pilih Hari</label>
+        <label>Select Days</label>
         <div class="day-picker-row" id="dayPicker">
-          <span class="day-chip" data-day="0">Min</span>
-          <span class="day-chip" data-day="1">Sen</span>
-          <span class="day-chip" data-day="2">Sel</span>
-          <span class="day-chip" data-day="3">Rab</span>
-          <span class="day-chip" data-day="4">Kam</span>
-          <span class="day-chip" data-day="5">Jum</span>
-          <span class="day-chip" data-day="6">Sab</span>
+          <span class="day-chip" data-day="0">Sun</span>
+          <span class="day-chip" data-day="1">Mon</span>
+          <span class="day-chip" data-day="2">Tue</span>
+          <span class="day-chip" data-day="3">Wed</span>
+          <span class="day-chip" data-day="4">Thu</span>
+          <span class="day-chip" data-day="5">Fri</span>
+          <span class="day-chip" data-day="6">Sat</span>
         </div>
       </div>
       <div class="form-group">
-        <label for="habitDuration">Target Durasi (opsional)</label>
-        <input class="neo-input" type="text" id="habitDuration" placeholder="Contoh: 30 menit" maxlength="30">
+        <label for="habitDuration">Target Duration (optional)</label>
+        <input class="neo-input" type="text" id="habitDuration" placeholder="e.g., 30 minutes" maxlength="30">
       </div>
       <div class="modal-actions">
-        <button type="button" class="btn" data-close-modal="habitModal">Batal</button>
-        <button type="submit" class="btn btn-primary" id="habitSubmitBtn">Simpan</button>
+        <button type="button" class="btn" data-close-modal="habitModal">Cancel</button>
+        <button type="submit" class="btn btn-primary" id="habitSubmitBtn">Save</button>
       </div>
     </form>
   </div>
@@ -802,12 +800,12 @@ body {
 <div class="modal-overlay" id="deleteModal">
   <div class="modal confirm-modal">
     <button class="modal-close" data-close-modal="deleteModal">&times;</button>
-    <h2>⚠️ HAPUS HABIT</h2>
-    <p class="confirm-text" id="deleteConfirmText">Yakin ingin menghapus habit ini?</p>
-    <p class="confirm-sub">Semua data check-in dan streak akan hilang permanen.</p>
+    <h2>⚠️ DELETE HABIT</h2>
+    <p class="confirm-text" id="deleteConfirmText">Are you sure you want to delete this habit?</p>
+    <p class="confirm-sub">All check-in and streak data will be permanently lost.</p>
     <div class="modal-actions">
-      <button class="btn" data-close-modal="deleteModal">Batal</button>
-      <button class="btn btn-red" id="btnConfirmDelete">Hapus</button>
+      <button class="btn" data-close-modal="deleteModal">Cancel</button>
+      <button class="btn btn-red" id="btnConfirmDelete">Delete</button>
     </div>
   </div>
 </div>
@@ -816,14 +814,14 @@ body {
 <div class="modal-overlay" id="resetModal">
   <div class="modal confirm-modal">
     <button class="modal-close" data-close-modal="resetModal">&times;</button>
-    <h2>🚨 RESET SEMUA DATA</h2>
-    <p class="confirm-text">Semua habit, check-in, streak, dan XP akan dihapus.</p>
-    <p class="confirm-sub" id="resetStep1">Ketik <strong>"RESET"</strong> lalu klik tombol untuk konfirmasi.</p>
-    <input class="neo-input" type="text" id="resetConfirmInput" placeholder='Ketik "RESET"' style="width:100%;margin-bottom:12px">
+    <h2>🚨 RESET ALL DATA</h2>
+    <p class="confirm-text">All habits, check-ins, streaks, and XP will be deleted.</p>
+    <p class="confirm-sub" id="resetStep1">Type <strong>"RESET"</strong> and click the button to confirm.</p>
+    <input class="neo-input" type="text" id="resetConfirmInput" placeholder='Type "RESET"' style="width:100%;margin-bottom:12px">
     <div class="error-msg" id="resetError"></div>
     <div class="modal-actions">
-      <button class="btn" data-close-modal="resetModal">Batal</button>
-      <button class="btn btn-red" id="btnConfirmReset">Reset Semua</button>
+      <button class="btn" data-close-modal="resetModal">Cancel</button>
+      <button class="btn btn-red" id="btnConfirmReset">Reset All</button>
     </div>
   </div>
 </div>
@@ -893,7 +891,7 @@ const DateHelper = {
   },
   /** Format date for display: "19 Jul 2026" */
   format(d) {
-    const months = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
+    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
     return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
   },
   /** Get the ISO week number */
@@ -972,7 +970,7 @@ class HabitTracker {
       localStorage.setItem(this.STORAGE_KEY, data);
     } catch (e) {
       console.warn('Failed to save data.', e);
-      this.showGlobalToast('Gagal menyimpan data! Penyimpanan penuh atau mode privat aktif.', 'error');
+      this.showGlobalToast('Failed to save data! Storage is full or private mode is active.', 'error');
     }
   }
 
@@ -1323,10 +1321,10 @@ class HabitTracker {
     try {
       const data = JSON.parse(jsonStr);
       if (!data || typeof data !== 'object') {
-        throw new Error('Format JSON tidak valid');
+        throw new Error('Invalid JSON format');
       }
       if (!Array.isArray(data.habits)) {
-        throw new Error('Data habits tidak ditemukan atau bukan array');
+        throw new Error('Habit data not found or not an array');
       }
 
       const validatedHabits = [];
@@ -1334,10 +1332,10 @@ class HabitTracker {
 
       for (const h of data.habits) {
         if (!h || typeof h !== 'object') {
-          throw new Error('Ada entri habit yang bukan objek');
+          throw new Error('A habit entry is not an object');
         }
         if (!h.name || typeof h.name !== 'string' || h.name.trim() === '') {
-          throw new Error('Nama habit wajib diisi dan harus teks');
+          throw new Error('Habit name is required and must be text');
         }
 
         const cleanHabit = {
@@ -1379,10 +1377,10 @@ class HabitTracker {
       
       this.recalculateXP();
       this.save();
-      this.showGlobalToast('Import data berhasil!', 'success');
+      this.showGlobalToast('Data imported successfully!', 'success');
       return { success: true };
     } catch (e) {
-      this.showGlobalToast('Import gagal: ' + e.message, 'error');
+      this.showGlobalToast('Import failed: ' + e.message, 'error');
       return { success: false, error: e.message };
     }
   }
@@ -1391,7 +1389,7 @@ class HabitTracker {
     this.habits = [];
     this.xp = 0;
     this.save();
-    this.showGlobalToast('Semua data berhasil di-reset!', 'success');
+    this.showGlobalToast('All data reset successfully!', 'success');
   }
 
   // ─── Event Binding (Delegation) ───
@@ -1456,7 +1454,7 @@ class HabitTracker {
     $('#btnConfirmReset').addEventListener('click', () => {
       const input = $('#resetConfirmInput');
       if (input.value.trim().toUpperCase() !== 'RESET') {
-        this.showInlineError('resetError', 'Ketik "RESET" untuk konfirmasi!');
+        this.showInlineError('resetError', 'Type "RESET" to confirm!');
         input.classList.add('error');
         input.parentElement.querySelector('.error-msg').classList.add('anim-shake');
         return;
@@ -1494,7 +1492,7 @@ class HabitTracker {
         this.openDeleteModal(habitId);
       } else if (action === 'cal-toggle' && dateKey && habitId) {
         if (!ALLOW_PAST_CHECKIN && dateKey !== DateHelper.todayKey()) {
-          this.showGlobalToast('Mengubah tanggal lampau dinonaktifkan di setelan!', 'error');
+          this.showGlobalToast('Modifying past dates is disabled in settings!', 'error');
           if (btn) {
             btn.classList.add('anim-shake');
             setTimeout(() => btn.classList.remove('anim-shake'), 400);
@@ -1643,8 +1641,8 @@ class HabitTracker {
   openHabitModal(editId) {
     const $ = (sel) => document.querySelector(sel);
     const isEdit = !!editId;
-    $('#habitModalTitle').textContent = isEdit ? '✏️ EDIT HABIT' : '➕ TAMBAH HABIT BARU';
-    $('#habitSubmitBtn').textContent = isEdit ? 'Update' : 'Simpan';
+    $('#habitModalTitle').textContent = isEdit ? '✏️ EDIT HABIT' : '➕ ADD NEW HABIT';
+    $('#habitSubmitBtn').textContent = isEdit ? 'Update' : 'Save';
     $('#habitEditId').value = editId || '';
     this.clearInlineError('habitNameError');
     $('#habitName').classList.remove('error');
@@ -1689,12 +1687,12 @@ class HabitTracker {
 
     // Validate name
     if (!name) {
-      this.showInlineError('habitNameError', 'Nama habit wajib diisi!');
+      this.showInlineError('habitNameError', 'Habit name is required!');
       $('#habitName').classList.add('error');
       return;
     }
     if (this.isDuplicateName(name, editId)) {
-      this.showInlineError('habitNameError', 'Nama habit sudah ada! Gunakan nama lain.');
+      this.showInlineError('habitNameError', 'Habit name already exists! Use a different name.');
       $('#habitName').classList.add('error');
       return;
     }
@@ -1709,7 +1707,7 @@ class HabitTracker {
     const duration = $('#habitDuration').value.trim();
 
     if (freqType === 'specific' && specificDays.length === 0) {
-      this.showInlineError('habitNameError', 'Pilih minimal satu hari!');
+      this.showInlineError('habitNameError', 'Select at least one day!');
       return;
     }
 
@@ -1738,7 +1736,7 @@ class HabitTracker {
     const h = this.getHabit(habitId);
     if (!h) return;
     this.deleteTargetId = habitId;
-    document.getElementById('deleteConfirmText').textContent = `Yakin ingin menghapus "${h.emoji} ${h.name}"?`;
+    document.getElementById('deleteConfirmText').textContent = `Are you sure you want to delete "${h.emoji} ${h.name}"?`;
     this.openModal('deleteModal');
   }
 
@@ -1879,9 +1877,9 @@ class HabitTracker {
       grid.innerHTML = `
         <div class="empty-state anim-pop-in">
           <div class="empty-emoji">🌱</div>
-          <h2>Belum Ada Habit</h2>
-          <p>Mulai bangun kebiasaan baik! Klik tombol "Tambah Habit" di atas.</p>
-          <button class="btn btn-primary" onclick="tracker.openHabitModal()">➕ Tambah Habit Pertama</button>
+          <h2>No Habits Yet</h2>
+          <p>Start building good habits! Click the "Add Habit" button above.</p>
+          <button class="btn btn-primary" onclick="tracker.openHabitModal()">➕ Add Your First Habit</button>
         </div>`;
       return;
     }
@@ -1889,8 +1887,8 @@ class HabitTracker {
       grid.innerHTML = `
         <div class="empty-state anim-pop-in">
           <div class="empty-emoji">🔍</div>
-          <h2>Tidak Ada Hasil</h2>
-          <p>Coba ubah filter atau sort.</p>
+          <h2>No Results Found</h2>
+          <p>Try changing the filter or sorting.</p>
         </div>`;
       return;
     }
@@ -1913,10 +1911,10 @@ class HabitTracker {
     const durationEscaped = this.escapeHtml(habit.duration);
 
     // Frequency label
-    let freqLabel = 'Harian';
-    if (habit.freqType === 'weekly') freqLabel = `${habit.weeklyCount}x / minggu`;
+    let freqLabel = 'Daily';
+    if (habit.freqType === 'weekly') freqLabel = `${habit.weeklyCount}x / week`;
     else if (habit.freqType === 'specific') {
-      const dayNames = ['Min','Sen','Sel','Rab','Kam','Jum','Sab'];
+      const dayNames = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
       freqLabel = (habit.specificDays || []).map(d => dayNames[d]).join(', ');
     }
 
@@ -1930,26 +1928,26 @@ class HabitTracker {
     <div class="habit-card ${animClass}" data-id="${habit.id}" draggable="true"
          style="background:${colorEscaped};">
       <div class="habit-card-header">
-        <span class="habit-emoji" title="Drag untuk reorder">${emojiEscaped}</span>
+        <span class="habit-emoji" title="Drag to reorder">${emojiEscaped}</span>
         <div style="flex:1">
           <div class="habit-name">${nameEscaped}</div>
           <div class="habit-meta">📅 ${freqLabel}${durationLabel}</div>
         </div>
         <div class="habit-actions">
           <button class="btn-icon" data-action="edit" data-habit-id="${habit.id}" title="Edit">✏️</button>
-          <button class="btn-icon" data-action="delete" data-habit-id="${habit.id}" title="Hapus">🗑️</button>
+          <button class="btn-icon" data-action="delete" data-habit-id="${habit.id}" title="Delete">🗑️</button>
         </div>
       </div>
 
       <div class="checkin-area">
         <button class="checkin-btn ${checked ? 'checked' : 'unchecked'}"
                 data-action="checkin" data-habit-id="${habit.id}"
-                title="${checked ? 'Batalkan check-in' : 'Check-in hari ini'}">
+                title="${checked ? 'Cancel check-in' : 'Check-in today'}">
           ${checked ? '✅' : '⬜'}
         </button>
         <div>
           <div class="checkin-status ${checked ? 'done' : 'pending'}">
-            ${checked ? '✔ Sudah Dilakukan!' : '⏳ Belum Hari Ini'}
+            ${checked ? '✔ Done Today!' : '⏳ Not Done Today'}
           </div>
           <div style="font-size:0.75rem;font-weight:700;color:var(--black);margin-top:2px">
             ${DateHelper.format(new Date())}
@@ -1960,12 +1958,12 @@ class HabitTracker {
       <div class="streak-row">
         <span>🔥 Streak: <strong>${streak.current}</strong></span>
         <span>🏆 Best: <strong>${streak.longest}</strong></span>
-        <span>📊 Bulan: <strong>${monthlyRate}%</strong></span>
+        <span>📊 Month: <strong>${monthlyRate}%</strong></span>
       </div>
 
       <div class="weekly-progress">
         <div class="weekly-progress-label">
-          <span>Progress Minggu Ini</span>
+          <span>This Week's Progress</span>
           <span>${weekly.count}/${weekly.target}</span>
         </div>
         <div class="progress-bar-wrap">
@@ -1980,7 +1978,7 @@ class HabitTracker {
   renderMiniCalendar(habit) {
     const today = new Date();
     const todayKey = DateHelper.todayKey();
-    const dayLabels = ['Sen','Sel','Rab','Kam','Jum','Sab','Min'];
+    const dayLabels = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
     const thisWeekMon = DateHelper.weekStart(today);
     const startDate = DateHelper.addDays(thisWeekMon, -28);
 
@@ -2017,7 +2015,7 @@ class HabitTracker {
     return `
     <div class="mini-calendar">
       <div class="mini-calendar-title">
-        <span>📅 5 Minggu Terakhir</span>
+        <span>📅 Last 5 Weeks</span>
       </div>
       <div class="mini-cal-grid">${cells}</div>
     </div>`;
